@@ -206,16 +206,9 @@ a:hover { color: var(--green); }
 
 .intro-band {
   background: var(--green);
-  color: var(--white);
+  color: var(--navy);
   padding-top: 30px;
   padding-bottom: 32px;
-}
-
-.intro-band__title {
-  font-weight: 800;
-  font-size: 28px;
-  line-height: 1.2;
-  margin: 0 0 10px;
 }
 
 .intro-band__text {
@@ -691,7 +684,6 @@ a:hover { color: var(--green); }
   .photo-strip__pause { right: 12px; bottom: 26px; }
 
   .intro-band { padding-top: 24px; padding-bottom: 26px; }
-  .intro-band__title { font-size: 23px; }
   .intro-band__text { font-size: 16px; }
 
   .faq__answer { padding: 16px 18px; }
