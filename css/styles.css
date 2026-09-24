@@ -202,11 +202,31 @@ a:hover { color: var(--green); }
 }
 .swash span { position: relative; }
 
-.accent-rule { height: 8px; background: var(--green); }
+/* ---------- Intro band (turquoise stripe under the hero) ---------- */
+
+.intro-band {
+  background: var(--green);
+  color: var(--white);
+  padding-top: 30px;
+  padding-bottom: 32px;
+}
+
+.intro-band__title {
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+
+.intro-band__text {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.55;
+}
 
 /* ---------- Photo strip ---------- */
 
-.photo-strip { background: var(--white); padding: 24px 0; }
+.photo-strip { position: relative; background: var(--white); padding: 24px 0; }
 
 .photo-strip__track {
   display: flex;
@@ -222,6 +242,61 @@ a:hover { color: var(--green); }
   height: 240px;
   object-fit: cover;
   scroll-snap-align: start;
+}
+
+/* Auto-scrolling marquee, switched on by main.js (not with reduced motion).
+   The images are duplicated, so sliding the track by -50% loops seamlessly;
+   padding-right matches the gap so both halves are exactly equal. */
+.photo-strip.is-animated { overflow: hidden; }
+
+.photo-strip.is-animated .photo-strip__track {
+  width: max-content;
+  overflow: visible;
+  padding-right: 12px;
+  animation: photo-marquee 70s linear infinite;
+}
+
+.photo-strip.is-animated:hover .photo-strip__track,
+.photo-strip.is-animated:focus-within .photo-strip__track,
+.photo-strip.is-paused .photo-strip__track {
+  animation-play-state: paused;
+}
+
+@keyframes photo-marquee {
+  to { transform: translateX(-50%); }
+}
+
+.photo-strip__pause {
+  position: absolute;
+  right: 16px;
+  bottom: 36px;
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--white);
+  border-radius: 50%;
+  background: rgba(42,42,81,0.6);
+  cursor: pointer;
+  padding: 0;
+}
+.photo-strip__pause:hover { background: var(--navy); }
+
+/* Pause icon (two bars); becomes a play triangle while paused */
+.photo-strip__pause-icon {
+  display: block;
+  width: 10px;
+  height: 12px;
+  margin: 0 auto;
+  border-left: 3px solid var(--white);
+  border-right: 3px solid var(--white);
+}
+.photo-strip__pause[aria-pressed="true"] .photo-strip__pause-icon {
+  width: 0;
+  height: 0;
+  margin-left: 13px;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 11px solid var(--white);
+  border-right: 0;
 }
 
 /* ---------- Intro ---------- */
@@ -422,11 +497,13 @@ a:hover { color: var(--green); }
 }
 
 .faq__answer {
-  padding: 0 0 24px;
+  margin: 0 0 24px;
+  padding: 20px 24px;
+  background: var(--white);
   font-weight: 400;
   font-size: 15px;
   line-height: 1.75;
-  color: var(--white);
+  color: var(--navy);
   max-width: 760px;
 }
 
@@ -572,6 +649,8 @@ a:hover { color: var(--green); }
   .hero__badge { width: 96px; top: 24px; right: 24px; }
   .hero__title { font-size: 52px; bottom: 56px; }
 
+  .intro-band__break { display: none; }
+
   .two-col { flex-direction: column; gap: 48px; }
   .two-col > * { flex: none; width: 100%; }
 
@@ -608,6 +687,14 @@ a:hover { color: var(--green); }
   .photo-strip { padding: 16px 0; }
   .photo-strip__track { gap: 8px; }
   .photo-strip__track img { flex-basis: 260px; width: 260px; height: 195px; }
+  .photo-strip.is-animated .photo-strip__track { padding-right: 8px; animation-duration: 55s; }
+  .photo-strip__pause { right: 12px; bottom: 26px; }
+
+  .intro-band { padding-top: 24px; padding-bottom: 26px; }
+  .intro-band__title { font-size: 23px; }
+  .intro-band__text { font-size: 16px; }
+
+  .faq__answer { padding: 16px 18px; }
 
   .section-title { font-size: 28px; }
   .lead { font-size: 19px; }

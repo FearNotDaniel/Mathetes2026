@@ -7,7 +7,7 @@ Gemeinschaft). Plain HTML, CSS and a little vanilla JS – no build step.
 index.html          page markup
 css/styles.css      all styles (desktop matches the approved 1130px mockup;
                     breakpoints at 960px and 600px)
-js/main.js          mobile menu + FAQ accordion
+js/main.js          mobile menu, photo marquee, FAQ accordion
 assets/             images
 .github/workflows/  GitHub Pages deployment
 ```
@@ -22,12 +22,14 @@ python3 -m http.server 8000   # then http://localhost:8000
 
 ## Deployment (GitHub Pages)
 
-Every push to `main` deploys via `.github/workflows/pages.yml`.
-One-time setup: in the repo on GitHub go to **Settings → Pages** and set
-**Source** to **GitHub Actions**. The site will be served at
-`https://<user>.github.io/Mathetes2026/` (all paths are relative, so it
-also works on a custom domain – add a `CNAME` file and include it in the
-workflow's copy step).
+Preview site: **https://mathetes.tenacity.at**
+
+Every push to `main` deploys via GitHub Actions (**Settings → Pages →
+Source: GitHub Actions**). The custom domain is configured under
+**Settings → Pages → Custom domain**; with Actions-based deployment no
+`CNAME` file is needed in the repo. All asset paths are relative, so the
+site also still works from `https://fearnotdaniel.github.io/Mathetes2026/`
+(GitHub redirects that to the custom domain).
 
 ## Still open
 

@@ -27,6 +27,36 @@
   });
 })();
 
+// Photo strip – auto-scrolling marquee (left as a manual scroller when the
+// visitor prefers reduced motion)
+(function () {
+  var strip = document.querySelector('[data-marquee]');
+  if (!strip) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var track = strip.querySelector('.photo-strip__track');
+  var pause = strip.querySelector('.photo-strip__pause');
+
+  // Second copy of the images so the loop is seamless; hidden from assistive tech
+  Array.prototype.slice.call(track.children).forEach(function (img) {
+    var clone = img.cloneNode(true);
+    clone.alt = '';
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+
+  track.removeAttribute('tabindex');
+  strip.classList.add('is-animated');
+  pause.hidden = false;
+
+  pause.addEventListener('click', function () {
+    var paused = pause.getAttribute('aria-pressed') !== 'true';
+    pause.setAttribute('aria-pressed', String(paused));
+    pause.setAttribute('aria-label', paused ? 'Bildlauf fortsetzen' : 'Bildlauf anhalten');
+    strip.classList.toggle('is-paused', paused);
+  });
+})();
+
 // FAQ accordion – one answer open at a time
 (function () {
   var toggles = document.querySelectorAll('.faq__toggle');
