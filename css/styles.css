@@ -1,0 +1,626 @@
+/* ==========================================================================
+   Mathetes – homepage styles
+   Desktop values match the approved 1130px mockup; breakpoints at 960px
+   (tablet: nav collapses, columns stack) and 600px (phone).
+   ========================================================================== */
+
+:root {
+  --navy: #2a2a51;
+  --green: #46cbaf;
+  --white: #ffffff;
+  --page-width: 1130px;
+  --gutter: 84px;
+  --font: 'Archivo', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--white);
+  color: var(--navy);
+  -webkit-text-size-adjust: 100%;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+h1, h2, h3, p, figure, blockquote { margin: 0; }
+
+a { color: var(--white); }
+a:hover { color: var(--green); }
+
+:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+
+.container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.section { padding-top: 76px; padding-bottom: 76px; }
+.section--light { background: var(--white); }
+.section--dark { background: var(--navy); }
+
+.section-title {
+  font-weight: 800;
+  font-size: 34px;
+  line-height: 1.2;
+  color: var(--navy);
+  margin: 0 0 24px;
+}
+.section--dark .section-title { color: var(--white); }
+
+.lead {
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.3;
+  color: var(--navy);
+  margin: 0 0 26px;
+}
+
+.body-text {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--navy);
+  margin: 0 0 22px;
+}
+.body-text:last-child { margin-bottom: 0; }
+
+.btn {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--navy);
+  padding: 14px 30px;
+}
+.btn:hover { color: var(--white); }
+.btn--large { padding: 16px 36px; }
+
+.two-col {
+  display: flex;
+  gap: 56px;
+  align-items: flex-start;
+}
+.two-col > * { flex: 1 1 0; min-width: 0; }
+
+/* ---------- Header / nav ---------- */
+
+.site-header { background: var(--navy); position: relative; z-index: 10; }
+
+.site-header__inner {
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 32px;
+}
+
+.site-header__logo img { height: 72px; width: auto; }
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  margin-left: 56px;
+  gap: 24px;
+}
+
+.site-nav a {
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 10px;
+  margin-right: -10px;
+  cursor: pointer;
+  color: var(--white);
+}
+.nav-toggle__bar {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-toggle__bar + .nav-toggle__bar { margin-top: 5px; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  height: 841px;
+  overflow: hidden;
+  background: var(--navy) url(../assets/hero-photo.jpg) center / cover no-repeat;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64%;
+  background: linear-gradient(to top, rgba(30,30,66,0.92) 0%, rgba(30,30,66,0.58) 48%, rgba(30,30,66,0) 100%);
+  pointer-events: none;
+}
+
+.hero__inner { position: relative; z-index: 1; height: 100%; }
+
+.hero__badge {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  width: 120px;
+  height: auto;
+}
+
+.hero__title {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 70px;
+  font-weight: 800;
+  font-size: 66px;
+  line-height: 1.14;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  text-shadow: 0 6px 28px rgba(0,0,0,0.4);
+}
+
+.swash { position: relative; display: inline-block; }
+.swash svg {
+  position: absolute;
+  left: -8%;
+  width: 116%;
+  max-width: none;
+  bottom: -0.1em;
+  height: 0.62em;
+  pointer-events: none;
+}
+.swash span { position: relative; }
+
+.accent-rule { height: 8px; background: var(--green); }
+
+/* ---------- Photo strip ---------- */
+
+.photo-strip { background: var(--white); padding: 24px 0; }
+
+.photo-strip__track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.photo-strip__track img {
+  flex: 0 0 320px;
+  width: 320px;
+  height: 240px;
+  object-fit: cover;
+  scroll-snap-align: start;
+}
+
+/* ---------- Intro ---------- */
+
+.intro .section-title { margin-bottom: 24px; }
+.intro__illustration { width: 100%; height: auto; margin: 0 0 28px; }
+
+/* ---------- Testimonials ---------- */
+
+.testimonials { padding-top: 72px; padding-bottom: 96px; }
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 457px));
+  justify-content: space-between;
+  align-items: start;
+  padding-bottom: 30px;
+}
+
+/* Staggered offsets from the mockup */
+.testimonials__grid > :nth-child(1) { margin-top: 6px; }
+.testimonials__grid > :nth-child(2) { margin-top: 20px; }
+.testimonials__grid > :nth-child(3) { margin-top: 34px; }
+.testimonials__grid > :nth-child(4) { margin-top: 20px; }
+.testimonials__grid > :nth-child(5) { margin-top: 36px; }
+.testimonials__grid > :nth-child(6) { margin-top: 30px; }
+
+/* Speech bubble, built on the mockup's 620×430 drawing: the body is a
+   bordered box (grows taller if a quote needs more room) and the tail is a
+   fixed-shape SVG hung below it. All sizes scale with the bubble's width. */
+.bubble {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  padding: 2.58% 2.58% 15.48%;      /* 16 / 96 of 620 */
+}
+
+.bubble__content {
+  aspect-ratio: 588 / 318;          /* minimum height; grows with content */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 16px 6.5%;
+  border: 1.36cqw solid var(--green);          /* 8 of 588 */
+  border-radius: 9.18cqw;                      /* 54 of 588 */
+}
+
+.bubble__tail {
+  position: absolute;
+  left: 8.06%;                      /* 50 of 620 */
+  top: 100%;
+  margin-top: -17.74%;              /* 110 of 620 */
+  width: 17.74%;
+  height: auto;
+  overflow: visible;
+}
+.bubble__tail rect { fill: var(--navy); }
+.bubble__tail path {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.bubble__quote {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--green);
+  margin: 0 0 14px;
+}
+
+.bubble__author,
+.video-bubble__caption {
+  font-weight: 400;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--green);
+  opacity: 0.85;
+}
+
+.video-bubble {
+  position: relative;
+  width: 340px;
+  max-width: 100%;
+  justify-self: start;
+  margin-left: 58px;
+}
+
+.video-bubble__frame {
+  position: absolute;
+  left: 9%;
+  right: 9%;
+  top: 6%;
+  height: 76%;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.video-bubble__frame img { width: 100%; height: 100%; object-fit: cover; }
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 62px;
+  height: 62px;
+  margin: -31px 0 0 -31px;
+  border-radius: 50%;
+  background: rgba(42,42,81,0.5);
+  border: 3px solid var(--white);
+}
+.play-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -11px 0 0 -7px;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-left: 18px solid var(--white);
+}
+
+.video-bubble__caption { margin: 10px 0 0; text-align: center; }
+
+/* ---------- Themen und Termine ---------- */
+
+.schedule .section-title { margin-bottom: 40px; }
+
+.info-box {
+  margin-top: 28px;
+  padding: 22px 24px;
+  background: rgba(70,203,175,0.1);
+  border-left: 3px solid var(--green);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--navy);
+}
+
+.dates__heading {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--navy);
+  opacity: 0.6;
+  margin: 0 0 14px;
+}
+
+.dates { list-style: none; margin: 0; padding: 0; }
+
+.dates li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(42,42,81,0.12);
+  font-size: 15px;
+  color: var(--navy);
+}
+
+.dates__num { font-weight: 700; color: var(--green); width: 34px; flex-shrink: 0; }
+.dates__day { font-weight: 500; flex: 1; }
+.dates__time { font-weight: 400; font-size: 13px; opacity: 0.65; flex-shrink: 0; }
+
+/* ---------- FAQ ---------- */
+
+.faq { border-top: 1px solid rgba(255,255,255,0.18); }
+.faq__item { border-bottom: 1px solid rgba(255,255,255,0.18); }
+.faq__item h3 { margin: 0; font: inherit; }
+
+.faq__toggle {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 22px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  cursor: pointer;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--white);
+}
+
+.faq__icon {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--green);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.faq__answer {
+  padding: 0 0 24px;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--white);
+  max-width: 760px;
+}
+
+/* ---------- Kontakt CTA ---------- */
+
+.cta {
+  background: var(--green);
+  padding-top: 96px;
+  padding-bottom: 96px;
+  text-align: center;
+}
+
+.cta__inner { max-width: 720px; margin: 0 auto; }
+
+.cta__title {
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1.3;
+  color: var(--navy);
+  margin: 0 0 20px;
+}
+
+.cta__text {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--navy);
+  margin: 0 0 36px;
+}
+
+/* ---------- Kernteam ---------- */
+
+/* Figures deliberately overhang their columns (see below); clip the
+   transparent overhang so it can't cause sideways scrolling on phones. */
+.team { overflow-x: clip; }
+.team .section-title { text-align: center; margin-bottom: 48px; }
+
+.team__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 40px 24px;
+}
+
+/* The blob artwork has lots of transparent margin, so the 300px figure is
+   allowed to be wider than its column and is centred over the name. */
+.team-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.team-member__figure {
+  position: relative;
+  flex: none;
+  width: min(300px, 135%);
+  aspect-ratio: 300 / 252;
+  transform: translateX(5%);        /* portrait sits 15px left of centre in the artwork */
+}
+
+.team-member__figure svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+
+.team-member__figure img {
+  position: absolute;
+  left: 13.33%;
+  top: 13.49%;
+  width: 63.33%;
+  height: auto;
+}
+.team-member__figure--marion img { top: 21.03%; width: 55%; }
+.team-member__figure--doris img { top: 13.1%; }
+
+.team-member__name {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--navy);
+  margin-top: 20px;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer { background: var(--navy); }
+
+.site-footer__inner {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  font-size: 13px;
+}
+
+.site-footer__copy,
+.site-footer a {
+  font-weight: 400;
+  color: var(--white);
+  opacity: 0.7;
+  text-decoration: none;
+}
+.site-footer a:hover { color: var(--white); opacity: 1; }
+
+.site-footer__links { display: flex; gap: 24px; }
+
+/* ==========================================================================
+   Tablet
+   ========================================================================== */
+
+@media (max-width: 960px) {
+  :root { --gutter: 40px; }
+
+  .site-header__inner { padding-left: 24px; height: 80px; }
+  .site-header__logo img { height: 58px; }
+
+  .nav-toggle { display: block; }
+
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--navy);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding: 8px var(--gutter) 20px;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+  }
+  .site-nav.is-open { display: flex; }
+  .site-nav a { padding: 14px 0; font-size: 17px; }
+  .site-nav a + a { border-top: 1px solid rgba(255,255,255,0.1); }
+
+  .hero { height: 620px; }
+  .hero__badge { width: 96px; top: 24px; right: 24px; }
+  .hero__title { font-size: 52px; bottom: 56px; }
+
+  .two-col { flex-direction: column; gap: 48px; }
+  .two-col > * { flex: none; width: 100%; }
+
+  .testimonials__grid {
+    grid-template-columns: minmax(0, 457px);
+    justify-content: center;
+    row-gap: 32px;
+    padding-bottom: 0;
+  }
+  .testimonials__grid > :nth-child(n) { margin-top: 0; }
+  .video-bubble { justify-self: center; margin-left: 0; }
+
+  .team__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ==========================================================================
+   Phone
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  :root { --gutter: 20px; }
+
+  .site-header__inner { padding-left: var(--gutter); height: 72px; }
+  .site-header__logo img { height: 50px; }
+
+  .section { padding-top: 56px; padding-bottom: 56px; }
+  .testimonials { padding-top: 56px; padding-bottom: 64px; }
+  .cta { padding-top: 64px; padding-bottom: 64px; }
+
+  .hero { height: 520px; }
+  .hero__badge { width: 76px; top: 16px; right: 16px; }
+  .hero__title { font-size: 38px; bottom: 40px; }
+
+  .photo-strip { padding: 16px 0; }
+  .photo-strip__track { gap: 8px; }
+  .photo-strip__track img { flex-basis: 260px; width: 260px; height: 195px; }
+
+  .section-title { font-size: 28px; }
+  .lead { font-size: 19px; }
+  .body-text { font-size: 16px; }
+  .cta__title { font-size: 25px; }
+  .cta__text { font-size: 16px; }
+
+  .bubble__quote { font-size: 15px; }
+
+  .faq__toggle { font-size: 16px; padding: 18px 0; }
+
+  .team__grid { gap: 32px 16px; }
+  .team-member__name { font-size: 15px; margin-top: 12px; }
+
+  .site-footer__inner { flex-direction: column; align-items: flex-start; }
+}
