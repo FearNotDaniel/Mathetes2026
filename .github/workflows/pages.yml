@@ -29,6 +29,16 @@ jobs:
           mkdir _site
           cp -R index.html .nojekyll css js assets _site/
 
+      # GitHub Pages lets browsers cache CSS/JS for 4 hours, so append a
+      # content hash to each reference; a changed file gets a new URL.
+      - name: Fingerprint CSS and JS
+        run: |
+          for f in css/styles.css js/main.js; do
+            hash=$(sha256sum "$f" | cut -c1-10)
+            sed -i "s#\"$f\"#\"$f?v=$hash\"#" _site/index.html
+            grep -q "$f?v=$hash" _site/index.html || { echo "::error::no reference to $f in index.html"; exit 1; }
+          done
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
       - id: deployment

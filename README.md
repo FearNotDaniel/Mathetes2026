@@ -31,6 +31,12 @@ Source: GitHub Actions**). The custom domain is configured under
 site also still works from `https://fearnotdaniel.github.io/Mathetes2026/`
 (GitHub redirects that to the custom domain).
 
+GitHub Pages lets browsers cache CSS and JS for 4 hours, so the deploy
+step appends a content hash to their URLs in the published `index.html`
+(e.g. `css/styles.css?v=3f9a1c2b7e`). Keep referencing them without the
+query string in the source; any new CSS/JS file needs adding to the
+fingerprint loop in `.github/workflows/pages.yml`.
+
 ## Still open
 
 - **Impressum / Datenschutz** links in the footer are `href="#"` stubs –
