@@ -79,3 +79,61 @@
     });
   });
 })();
+
+// Testimonial videos – play in a popup. Without JS (or <dialog>) the
+// thumbnails are plain links to the MP4, so the browser's player opens.
+(function () {
+  var modal = document.querySelector('.video-modal');
+  var links = document.querySelectorAll('.video-bubble__frame');
+  if (!modal || typeof modal.showModal !== 'function') return;
+
+  var video = modal.querySelector('video');
+
+  function open(link) {
+    var caption = link.closest('.video-bubble').querySelector('.video-bubble__caption');
+    modal.setAttribute('aria-label', caption.textContent);
+    modal.style.setProperty('--video-aspect', link.getAttribute('data-aspect'));
+    video.poster = link.getAttribute('data-poster');
+    video.src = link.getAttribute('href');
+    modal.showModal();
+    // Lets the phone's Back button close the popup instead of leaving the page
+    history.pushState({ videoModal: true }, '');
+    // Started from the click, so sound is allowed; if the browser still
+    // refuses, the player's own play button is there
+    var playing = video.play();
+    if (playing) playing.catch(function () {});
+  }
+
+  links.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      open(link);
+    });
+  });
+
+  // Every way of closing (✕, Esc, backdrop, Back button) ends up here
+  modal.addEventListener('close', function () {
+    video.pause();
+    video.removeAttribute('src');
+    video.load();   // stops any download still in progress
+    if (history.state && history.state.videoModal) history.back();
+  });
+
+  modal.querySelector('.video-modal__close').addEventListener('click', function () {
+    modal.close();
+  });
+
+  // Clicks on the backdrop land on the dialog itself
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) modal.close();
+  });
+
+  window.addEventListener('popstate', function () {
+    if (modal.open) modal.close();
+  });
+
+  // Back to the poster at the end; the popup stays open for a replay
+  video.addEventListener('ended', function () {
+    video.load();
+  });
+})();
