@@ -738,8 +738,6 @@ html:has(.video-modal[open]) { overflow: hidden; }
   width: 63.33%;
   height: auto;
 }
-.team-member__figure--marion img { top: 21.03%; width: 55%; }
-.team-member__figure--doris img { top: 13.1%; }
 
 .team-member__name {
   font-weight: 700;
