@@ -257,6 +257,7 @@ a:hover { color: var(--green); }
   left: var(--gutter);
   right: var(--gutter);
   bottom: 70px;
+  text-align: center;
   font-weight: 800;
   font-size: 66px;
   line-height: 1.14;
@@ -287,6 +288,7 @@ a:hover { color: var(--green); }
 }
 
 .intro-band__text {
+  text-align: center;
   font-weight: 500;
   font-size: 18px;
   line-height: 1.55;
