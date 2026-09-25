@@ -381,11 +381,16 @@ a:hover { color: var(--green); }
   font-size: 16px;
   line-height: 1.55;
   color: var(--green);
-  margin: 0 0 14px;
+  margin: 0;
 }
 
+/* Attribution under the bubble, starting at the tail's tip (60 of 620 in
+   both the text and video bubble drawings) */
 .bubble__author,
 .video-bubble__caption {
+  margin: 10px 0 0;
+  padding-left: 9.68%;
+  text-align: left;
   font-weight: 400;
   font-style: italic;
   font-size: 13px;
@@ -401,12 +406,15 @@ a:hover { color: var(--green); }
   margin-left: 58px;
 }
 
+/* Square thumbnail inside the bubble outline (viewBox 620×708). The margin
+   is a % of the width, so it tracks the drawing: 50 / 620 from the top. */
 .video-bubble__frame {
   position: absolute;
+  top: 0;
   left: 9%;
   right: 9%;
-  top: 6%;
-  height: 76%;
+  margin-top: 8.06%;
+  aspect-ratio: 1;
   overflow: hidden;
   border-radius: 14px;
 }
@@ -422,7 +430,8 @@ a:hover { color: var(--green); }
   margin: -31px 0 0 -31px;
   border-radius: 50%;
   background: rgba(42,42,81,0.5);
-  border: 3px solid var(--white);
+  border: 3px solid var(--green);
+  transition: background-color 0.2s;
 }
 .play-icon::after {
   content: "";
@@ -432,10 +441,72 @@ a:hover { color: var(--green); }
   margin: -11px 0 0 -7px;
   border-top: 11px solid transparent;
   border-bottom: 11px solid transparent;
-  border-left: 18px solid var(--white);
+  border-left: 18px solid var(--green);
 }
+.video-bubble__frame:hover .play-icon { background: var(--navy); }
 
-.video-bubble__caption { margin: 10px 0 0; text-align: center; }
+/* Video popup: one <dialog> shared by both videos (js/main.js). Close
+   button above the video so it never covers the player's own controls. */
+html:has(.video-modal[open]) { overflow: hidden; }
+
+.video-modal {
+  --video-max-h: 848px;             /* native height of the current files */
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+  overflow: visible;
+}
+.video-modal[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.video-modal::backdrop { background: rgba(42,42,81,0.85); }
+
+.video-modal__close {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid var(--green);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.video-modal__close::before,
+.video-modal__close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2px;
+  margin: -1px 0 0 -9px;
+  background: var(--green);
+  transform: rotate(45deg);
+}
+.video-modal__close::after { transform: rotate(-45deg); }
+.video-modal__close:hover { background: var(--green); }
+.video-modal__close:hover::before,
+.video-modal__close:hover::after { background: var(--navy); }
+
+/* Never upscale past the file's native size; never crop (burnt-in captions) */
+.video-modal__video {
+  display: block;
+  aspect-ratio: var(--video-aspect, 480 / 848);
+  height: min(var(--video-max-h), calc(88vh - 56px));
+  height: min(var(--video-max-h), calc(88dvh - 56px));
+  width: auto;
+  max-width: 92vw;
+  object-fit: contain;
+  border-radius: 14px;
+  background: #000;
+}
 
 /* ---------- Themen und Termine ---------- */
 
@@ -762,6 +833,34 @@ a:hover { color: var(--green); }
   .cta__text { font-size: 16px; }
 
   .bubble__quote { font-size: 15px; }
+
+  /* Video popup fills the screen */
+  .video-modal {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+             env(safe-area-inset-bottom) env(safe-area-inset-left);
+    background: #000;
+  }
+  .video-modal[open] { gap: 0; }
+  /* Over the top right of the video, so the video gets the full height */
+  .video-modal__close {
+    position: absolute;
+    z-index: 1;
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+    background: rgba(42,42,81,0.6);
+  }
+  .video-modal__video {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    height: auto;
+    max-width: none;
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
 
   .faq__toggle { font-size: 16px; padding: 18px 0; }
 

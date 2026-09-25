@@ -10,7 +10,7 @@ datenschutz.html
 css/styles.css      all styles (desktop matches the approved 1130px mockup;
                     breakpoints at 1100px (header only),
                     960px and 600px)
-js/main.js          mobile menu, photo marquee, FAQ accordion
+js/main.js          mobile menu, photo marquee, FAQ accordion, video popup
 assets/             images
 assets/fonts/       Archivo (variable woff2, self-hosted – no requests to
                     Google; SIL OFL licence alongside)
@@ -51,8 +51,14 @@ the page, so it can't see the noindex and may still list the bare URL.
 
 ## Still open
 
-- **Videos** in "Erfahrungen" are still static stills with a play icon;
-  wire up YouTube/Vimeo embeds or `<video>` once the files exist.
+- **Videos** in "Erfahrungen" are self-hosted (`assets/video/`) and play
+  in a `<dialog>` popup, full-screen on phones. They're the current 480p
+  files; higher-resolution versions are due from the client's media team.
+  When swapping, use new filenames (the 4 h browser cache), update
+  `data-aspect`, the durations in the `aria-label`s, and `--video-max-h` in
+  the CSS. Encoded with:
+  `ffmpeg -i in.mov -c:v libx264 -preset slow -crf 24 -profile:v high
+  -pix_fmt yuv420p -r 30 -c:a aac -b:a 96k -movflags +faststart out.mp4`
 - **Contact** is via `mailto:` links only; no form.
 - **Images** aren't compressed or served with `srcset`; the page is
   ~3 MB of images, mostly the team PNGs and carousel JPEGs.
