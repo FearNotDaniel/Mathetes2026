@@ -41,6 +41,18 @@ jobs:
             done
           done
 
+      # This deployment is the client preview, so keep it out of search
+      # engines. A robots meta tag rather than a robots.txt Disallow: a
+      # blocked crawler never fetches the page, so it can't see noindex and
+      # may still list the bare URL if something links to it. Drop this step
+      # for a production deployment.
+      - name: Mark pages noindex
+        run: |
+          for page in _site/*.html; do
+            sed -i 's#</head>#<meta name="robots" content="noindex, nofollow">\n</head>#' "$page"
+            grep -q 'name="robots" content="noindex' "$page" || { echo "::error::no robots meta in $page"; exit 1; }
+          done
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
       - id: deployment

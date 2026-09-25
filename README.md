@@ -42,6 +42,13 @@ step appends a content hash to their URLs in every published HTML page
 query string in the source; any new CSS/JS file needs adding to the
 fingerprint loop in `.github/workflows/pages.yml`.
 
+The preview shouldn't show up in search results, so the deploy step also
+adds `<meta name="robots" content="noindex, nofollow">` to every
+published HTML page. It isn't in the source files, so a production
+deployment only needs to leave that workflow step out. There's
+deliberately no `robots.txt`: a crawler blocked by `Disallow` never reads
+the page, so it can't see the noindex and may still list the bare URL.
+
 ## Still open
 
 - **Videos** in "Erfahrungen" are still static stills with a play icon;
