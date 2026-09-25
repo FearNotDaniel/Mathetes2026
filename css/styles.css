@@ -610,7 +610,23 @@ a:hover { color: var(--green); }
   line-height: 1.7;
 }
 
-.legal a { color: var(--navy); text-decoration-color: var(--green); text-underline-offset: 3px; }
+.legal__table { overflow-x: auto; margin: 0 0 32px; }
+.legal table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.legal th,
+.legal td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(42,42,81,0.15);
+}
+.legal th { font-weight: 700; border-bottom: 2px solid var(--green); }
+
+.legal a { color: var(--navy); text-decoration-color: var(--green); text-underline-offset: 3px; overflow-wrap: anywhere; }
 .legal a:hover { color: var(--green); }
 
 .site-footer a[aria-current="page"] { opacity: 1; }
