@@ -517,15 +517,71 @@ html:has(.video-modal[open]) { overflow: hidden; }
 
 .schedule .section-title { margin-bottom: 40px; }
 
-.info-box {
-  margin-top: 28px;
-  padding: 22px 24px;
-  background: rgba(70,203,175,0.1);
-  border-left: 3px solid var(--green);
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--navy);
+/* Key facts: two navy cards; the early-bird badge (turquoise blob with
+   serif lettering) sits over the top right of the deadline card. */
+.key-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 96px;
+}
+
+.key-facts__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 150px;
+  padding: 32px 40px;
+  border-radius: 18px;
+  background: var(--navy);
+  color: var(--white);
+}
+.key-facts__card--deadline { padding-right: 176px; }
+
+.key-facts__label {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+.key-facts__value { font-weight: 800; font-size: 30px; line-height: 1.15; }
+.key-facts__detail { font-weight: 500; font-size: 17px; line-height: 1.4; margin-top: 4px; opacity: 0.85; }
+
+.key-facts__badge {
+  position: absolute;
+  top: -72px;
+  right: -24px;
+  width: 200px;
+  aspect-ratio: 470 / 450;
+  transform: rotate(-7deg);
+}
+.key-facts__badge svg { width: 100%; height: 100%; overflow: visible; }
+.key-facts__badge text {
+  font-family: 'Times New Roman', Times, serif;
+  fill: var(--navy);
+}
+.key-facts__badge-arc { font-size: 44px; font-style: italic; font-weight: 700; letter-spacing: 0.5px; }
+.key-facts__badge-big { font-size: 54px; font-weight: 700; }
+.key-facts__badge-small { font-size: 36px; font-style: italic; }
+.key-facts__swirl {
+  fill: none;
+  stroke: var(--navy);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.key-facts__swirl--thin { stroke-width: 7; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .dates__heading {
@@ -796,6 +852,9 @@ html:has(.video-modal[open]) { overflow: hidden; }
   .video-bubble { justify-self: center; margin-left: 0; }
 
   .team__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .key-facts { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 88px; }
+  .key-facts__badge { right: -16px; }
 }
 
 /* ==========================================================================
@@ -871,6 +930,13 @@ html:has(.video-modal[open]) { overflow: hidden; }
 
   .team__grid { gap: 32px 16px; }
   .team-member__name { font-size: 15px; margin-top: 12px; }
+
+  .key-facts { margin-top: 80px; }
+  .key-facts__card { min-height: 0; padding: 24px 22px; }
+  .key-facts__card--deadline { padding-top: 34px; padding-right: 22px; }
+  .key-facts__value { font-size: 23px; }
+  .key-facts__detail { font-size: 16px; }
+  .key-facts__badge { width: 166px; top: -84px; right: -10px; }
 
   .site-footer__inner { flex-direction: column; align-items: flex-start; }
 }
