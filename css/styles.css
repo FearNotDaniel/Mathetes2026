@@ -523,8 +523,10 @@ html:has(.video-modal[open]) { overflow: hidden; }
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px;
-  margin-top: 96px;
+  margin-top: 56px;
 }
+/* Extra room above for the badge; the class is dropped when the offer ends */
+.key-facts--badged { margin-top: 96px; }
 
 .key-facts__card {
   position: relative;
@@ -537,7 +539,7 @@ html:has(.video-modal[open]) { overflow: hidden; }
   background: var(--navy);
   color: var(--white);
 }
-.key-facts__card--deadline { padding-right: 176px; }
+.key-facts--badged .key-facts__card:first-child { padding-right: 176px; }
 
 .key-facts__label {
   font-weight: 700;
@@ -853,7 +855,8 @@ html:has(.video-modal[open]) { overflow: hidden; }
 
   .team__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-  .key-facts { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 88px; }
+  .key-facts { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 48px; }
+  .key-facts--badged { margin-top: 88px; }
   .key-facts__badge { right: -16px; }
 }
 
@@ -931,9 +934,10 @@ html:has(.video-modal[open]) { overflow: hidden; }
   .team__grid { gap: 32px 16px; }
   .team-member__name { font-size: 15px; margin-top: 12px; }
 
-  .key-facts { margin-top: 80px; }
+  .key-facts { margin-top: 40px; }
+  .key-facts--badged { margin-top: 80px; }
   .key-facts__card { min-height: 0; padding: 24px 22px; }
-  .key-facts__card--deadline { padding-top: 34px; padding-right: 22px; }
+  .key-facts--badged .key-facts__card:first-child { padding-top: 34px; padding-right: 22px; }
   .key-facts__value { font-size: 23px; }
   .key-facts__detail { font-size: 16px; }
   .key-facts__badge { width: 166px; top: -84px; right: -10px; }

@@ -140,3 +140,15 @@
     video.load();
   });
 })();
+
+// Early-bird badge – removed once the offer has ended (data-expires is the
+// first moment it no longer applies, in Vienna time)
+(function () {
+  var badge = document.querySelector('.key-facts__badge[data-expires]');
+  if (!badge) return;
+  var expires = new Date(badge.getAttribute('data-expires'));
+  if (isNaN(expires) || Date.now() < expires.getTime()) return;
+
+  badge.closest('.key-facts').classList.remove('key-facts--badged');
+  badge.remove();
+})();
