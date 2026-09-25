@@ -269,10 +269,16 @@ a:hover { color: var(--green); }
   animation: photo-marquee 70s linear infinite;
 }
 
-.photo-strip.is-animated:hover .photo-strip__track,
-.photo-strip.is-animated:focus-within .photo-strip__track,
+/* Hovering the photos pauses them, but only with a real pointer: touch
+   browsers keep :hover stuck after a tap, which would stop it for good. The
+   button sits beside the track, so pressing play doesn't count as hovering. */
 .photo-strip.is-paused .photo-strip__track {
   animation-play-state: paused;
+}
+@media (hover: hover) {
+  .photo-strip.is-animated .photo-strip__track:hover {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes photo-marquee {
@@ -290,8 +296,17 @@ a:hover { color: var(--green); }
   background: rgba(42,42,81,0.6);
   cursor: pointer;
   padding: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  /* Own compositing layer: without it iOS WebKit sometimes repaints the
+     background as a rectangle past the circle while the strip animates */
+  transform: translateZ(0);
+  z-index: 1;
 }
-.photo-strip__pause:hover { background: var(--navy); }
+@media (hover: hover) {
+  .photo-strip__pause:hover { background: var(--navy); }
+}
 
 /* Pause icon (two bars); becomes a play triangle while paused */
 .photo-strip__pause-icon {
