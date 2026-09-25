@@ -12,6 +12,8 @@ css/styles.css      all styles (desktop matches the approved 1130px mockup;
                     960px and 600px)
 js/main.js          mobile menu, photo marquee, FAQ accordion
 assets/             images
+assets/fonts/       Archivo (variable woff2, self-hosted – no requests to
+                    Google; SIL OFL licence alongside)
 .github/workflows/  GitHub Pages deployment
 ```
 
