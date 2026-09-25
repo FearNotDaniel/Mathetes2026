@@ -61,5 +61,10 @@ the page, so it can't see the noindex and may still list the bare URL.
   `ffmpeg -i in.mov -c:v libx264 -preset slow -crf 24 -profile:v high
   -pix_fmt yuv420p -r 30 -c:a aac -b:a 96k -movflags +faststart out.mp4`
 - **Contact** is via `mailto:` links only; no form.
-- **Images** aren't compressed or served with `srcset`; the page is
-  ~3 MB of images, mostly the team PNGs and carousel JPEGs.
+- **Images** are sized to about twice their largest display size (sharp
+  on high-density screens) and compressed: photos as progressive JPEG
+  (quality ~80), carousel photos pre-cropped to the 4:3 frame they show
+  in (640×480). The transparent team portraits and home badge are WebP
+  with a PNG fallback via `<picture>`. No `srcset`: each image displays
+  at much the same size at every breakpoint, so one file per image is
+  enough. About 1 MB of images in total.
