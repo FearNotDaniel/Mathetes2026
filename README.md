@@ -12,8 +12,9 @@ css/styles.css      all styles (desktop matches the approved 1130px mockup;
                     960px and 600px)
 js/main.js          mobile menu, photo marquee, FAQ accordion, video popup
 assets/             images
-assets/fonts/       Archivo (variable woff2, self-hosted – no requests to
-                    Google; SIL OFL licence alongside)
+assets/fonts/       Archivo (variable woff2) and Tinos (early-bird badge),
+                    self-hosted – no requests to Google; SIL OFL licences
+                    alongside
 .github/workflows/  GitHub Pages deployment
 ```
 
