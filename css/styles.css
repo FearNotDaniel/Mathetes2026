@@ -291,41 +291,29 @@ a:hover { color: var(--green); }
   bottom: 36px;
   width: 36px;
   height: 36px;
-  border: 2px solid var(--white);
-  border-radius: 50%;
-  background: rgba(42,42,81,0.6);
+  border: 0;
+  background: none;
   cursor: pointer;
   padding: 0;
   -webkit-appearance: none;
   appearance: none;
   -webkit-tap-highlight-color: transparent;
-  /* Own compositing layer: without it iOS WebKit sometimes repaints the
-     background as a rectangle past the circle while the strip animates */
-  transform: translateZ(0);
-  z-index: 1;
 }
+
+/* The circle is drawn in SVG rather than with border-radius: iOS WebKit
+   intermittently loses the rounded clip over the animating strip and paints
+   the translucent background as a rectangle past the circle. */
+.photo-strip__pause svg { display: block; width: 100%; height: 100%; }
+.photo-strip__pause-bg { fill: rgba(42,42,81,0.6); stroke: var(--white); stroke-width: 2; }
 @media (hover: hover) {
-  .photo-strip__pause:hover { background: var(--navy); }
+  .photo-strip__pause:hover .photo-strip__pause-bg { fill: var(--navy); }
 }
 
 /* Pause icon (two bars); becomes a play triangle while paused */
-.photo-strip__pause-icon {
-  display: block;
-  width: 10px;
-  height: 12px;
-  margin: 0 auto;
-  border-left: 3px solid var(--white);
-  border-right: 3px solid var(--white);
-}
-.photo-strip__pause[aria-pressed="true"] .photo-strip__pause-icon {
-  width: 0;
-  height: 0;
-  margin-left: 13px;
-  border-top: 7px solid transparent;
-  border-bottom: 7px solid transparent;
-  border-left: 11px solid var(--white);
-  border-right: 0;
-}
+.photo-strip__pause-icon { fill: var(--white); }
+.photo-strip__pause-play,
+.photo-strip__pause[aria-pressed="true"] .photo-strip__pause-bars { display: none; }
+.photo-strip__pause[aria-pressed="true"] .photo-strip__pause-play { display: inline; }
 
 /* ---------- Intro ---------- */
 
