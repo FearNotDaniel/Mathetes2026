@@ -96,6 +96,9 @@
     video.poster = link.getAttribute('data-poster');
     video.src = link.getAttribute('href');
     modal.showModal();
+    // showModal() focuses the ✕ button, which then shows its focus ring on
+    // every open; focus the dialog itself so Tab still reaches the ✕ next
+    modal.focus();
     // Lets the phone's Back button close the popup instead of leaving the page
     history.pushState({ videoModal: true }, '');
     // Started from the click, so sound is allowed; if the browser still
