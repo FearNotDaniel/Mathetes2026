@@ -25,9 +25,18 @@
 
 /* Tinos (same letter widths as Times New Roman) for the early-bird badge,
    self-hosted so the curved lettering fits on every device – Android has no
-   Times New Roman and its default serif is too wide. Subset to Latin plus
-   German letters; licence in assets/fonts/Tinos-OFL.txt. "block" keeps the
-   badge text hidden for a moment rather than flashing a wider fallback. */
+   Times New Roman and its default serif is too wide. Also used upright for
+   the header tagline. Subset to Latin plus German letters; licence in
+   assets/fonts/Tinos-OFL.txt. The badge faces use "block" to keep the text
+   hidden for a moment rather than flash a wider fallback; the tagline face
+   uses "swap" so the header never shows a gap. */
+@font-face {
+  font-family: 'Tinos';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/tinos-400-normal.woff2') format('woff2');
+}
 @font-face {
   font-family: 'Tinos';
   font-style: italic;
@@ -152,8 +161,27 @@ a:hover { color: var(--green); }
   padding-left: 32px;
 }
 
-.site-header__logo { flex: none; }
-.site-header__logo img { height: 72px; width: auto; max-width: none; }
+.site-header__logo {
+  --logo-w: 240px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--logo-w);
+  text-decoration: none;
+}
+.site-header__logo img { width: 100%; height: auto; max-width: none; }
+
+/* Tagline under the wordmark, sized with it */
+.site-header__tagline {
+  margin-top: calc(var(--logo-w) * 0.035);
+  font-family: 'Tinos', 'Times New Roman', Times, serif;
+  font-size: max(10.5px, calc(var(--logo-w) * 0.058));
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: var(--green);
+}
 
 .site-nav {
   display: flex;
@@ -837,7 +865,7 @@ html:has(.video-modal[open]) { overflow: hidden; }
 
 @media (max-width: 1100px) {
   .site-header__inner { padding-right: 32px; }
-  .site-header__logo img { height: 60px; }
+  .site-header__logo { --logo-w: 200px; }
   .site-nav { margin-left: 32px; gap: 16px; }
 }
 
@@ -849,7 +877,7 @@ html:has(.video-modal[open]) { overflow: hidden; }
   :root { --gutter: 40px; }
 
   .site-header__inner { padding-left: 24px; padding-right: var(--gutter); height: 80px; }
-  .site-header__logo img { height: 58px; }
+  .site-header__logo { --logo-w: 192px; }
 
   .nav-toggle { display: block; }
 
@@ -905,7 +933,7 @@ html:has(.video-modal[open]) { overflow: hidden; }
   :root { --gutter: 20px; }
 
   .site-header__inner { padding-left: var(--gutter); height: 72px; }
-  .site-header__logo img { height: 50px; }
+  .site-header__logo { --logo-w: 166px; }
 
   .section { padding-top: 56px; padding-bottom: 56px; }
   .testimonials { padding-top: 56px; padding-bottom: 64px; }
