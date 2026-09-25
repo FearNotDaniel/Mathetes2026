@@ -851,7 +851,7 @@ html:has(.video-modal[open]) { overflow: hidden; }
     position: absolute;
     z-index: 1;
     /* Low enough to clear the native player's top row (mute etc. on iOS) */
-    top: calc(max(12px, env(safe-area-inset-top)) + 48px);
+    top: calc(max(12px, env(safe-area-inset-top)) + 24px);
     right: max(12px, env(safe-area-inset-right));
     background: rgba(42,42,81,0.6);
   }
