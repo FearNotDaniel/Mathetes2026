@@ -465,6 +465,8 @@ html:has(.video-modal[open]) { overflow: hidden; }
   gap: 12px;
 }
 .video-modal::backdrop { background: rgba(42,42,81,0.85); }
+/* Takes focus on open instead of the ✕ button (js/main.js) */
+.video-modal:focus { outline: none; }
 
 .video-modal__close {
   position: relative;
@@ -848,7 +850,8 @@ html:has(.video-modal[open]) { overflow: hidden; }
   .video-modal__close {
     position: absolute;
     z-index: 1;
-    top: max(12px, env(safe-area-inset-top));
+    /* Low enough to clear the native player's top row (mute etc. on iOS) */
+    top: calc(max(12px, env(safe-area-inset-top)) + 48px);
     right: max(12px, env(safe-area-inset-right));
     background: rgba(42,42,81,0.6);
   }
