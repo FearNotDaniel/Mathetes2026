@@ -231,6 +231,16 @@ a:hover { color: var(--green); }
   background: var(--navy) url(../assets/hero-photo.jpg) center / cover no-repeat;
 }
 
+/* Above 1440px, keep the 1440px framing: the hero grows with the width (same
+   1440:841 proportions, capped at 1100px tall) and the photo's top crop scales
+   with the width so heads stay put. At exactly 1440px this matches "center". */
+@media (min-width: 1441px) {
+  .hero {
+    height: clamp(841px, 58.4vw, 1100px);
+    background-position: center calc(-8.01vw);
+  }
+}
+
 .hero::after {
   content: "";
   position: absolute;
@@ -246,6 +256,7 @@ a:hover { color: var(--green); }
 
 .hero__badge {
   position: absolute;
+  z-index: 1;
   top: 32px;
   right: 32px;
   width: 120px;
