@@ -68,6 +68,8 @@
   --gutter: 84px;
   --font: 'Archivo', system-ui, sans-serif;
   --zoom: 1;                        /* page scale, raised on wide screens */
+  --header-h: 96px;
+  --hero-h: 841px;                  /* design height, shrunk to fit the window */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -156,7 +158,7 @@ a:hover { color: var(--green); }
 .site-header { background: var(--navy); position: relative; z-index: 10; }
 
 .site-header__inner {
-  height: 96px;
+  height: var(--header-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -226,9 +228,14 @@ a:hover { color: var(--green); }
 
 /* ---------- Hero ---------- */
 
+/* The header and hero always fit in the window together: the hero keeps its
+   design height when there's room and shrinks when the window is shorter,
+   but not below 300px (landscape phones). svh is the height with the mobile
+   browser bars showing; vh is the fallback for older browsers. */
 .hero {
   position: relative;
-  height: 841px;
+  height: min(var(--hero-h), max(300px, 100vh / var(--zoom) - var(--header-h)));
+  height: min(var(--hero-h), max(300px, 100svh / var(--zoom) - var(--header-h)));
   overflow: hidden;
   background: var(--navy) url(../assets/hero-photo.jpg) center / cover no-repeat;
 }
@@ -239,8 +246,8 @@ a:hover { color: var(--green); }
    Viewport units are scaled by the page zoom too, so they're divided by it
    to keep the hero the same height on screen. */
 @media (min-width: 1441px) {
+  :root { --hero-h: calc(clamp(841px, 58.4vw, 1100px) / var(--zoom)); }
   .hero {
-    height: calc(clamp(841px, 58.4vw, 1100px) / var(--zoom));
     background-position: center calc(-8.01vw / var(--zoom));
   }
 }
@@ -947,9 +954,9 @@ html:has(.video-modal[open]) { overflow: hidden; }
    ========================================================================== */
 
 @media (max-width: 960px) {
-  :root { --gutter: 40px; }
+  :root { --gutter: 40px; --header-h: 80px; --hero-h: 620px; }
 
-  .site-header__inner { padding-left: 24px; padding-right: var(--gutter); height: 80px; }
+  .site-header__inner { padding-left: 24px; padding-right: var(--gutter); }
   .site-header__logo { --logo-w: 192px; }
 
   .nav-toggle { display: block; }
@@ -973,7 +980,6 @@ html:has(.video-modal[open]) { overflow: hidden; }
   .site-nav a { padding: 14px 0; font-size: 17px; }
   .site-nav a + a { border-top: 1px solid rgba(255,255,255,0.1); }
 
-  .hero { height: 620px; }
   .hero__badge { width: 96px; top: 24px; right: 24px; }
   .hero__title { font-size: 52px; bottom: 56px; }
 
@@ -1003,16 +1009,15 @@ html:has(.video-modal[open]) { overflow: hidden; }
    ========================================================================== */
 
 @media (max-width: 600px) {
-  :root { --gutter: 20px; }
+  :root { --gutter: 20px; --header-h: 72px; --hero-h: 520px; }
 
-  .site-header__inner { padding-left: var(--gutter); height: 72px; }
+  .site-header__inner { padding-left: var(--gutter); }
   .site-header__logo { --logo-w: 166px; }
 
   .section { padding-top: 56px; padding-bottom: 56px; }
   .testimonials { padding-top: 56px; padding-bottom: 64px; }
   .cta { padding-top: 64px; padding-bottom: 64px; }
 
-  .hero { height: 520px; }
   .hero__badge { width: 76px; top: 16px; right: 16px; }
   .hero__title { font-size: 38px; bottom: 40px; }
 
@@ -1022,8 +1027,8 @@ html:has(.video-modal[open]) { overflow: hidden; }
   .photo-strip.is-animated .photo-strip__track { padding-right: 8px; animation-duration: 55s; }
   .photo-strip__pause { right: 12px; bottom: 26px; }
 
-  .intro-band { padding-top: 24px; padding-bottom: 26px; }
-  .intro-band__text { font-size: 16px; }
+  .intro-band { padding-top: 20px; padding-bottom: 22px; }
+  .intro-band__text { font-size: 14px; line-height: 1.5; }
 
   .faq__answer { padding: 16px 18px; }
 
