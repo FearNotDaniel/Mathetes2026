@@ -1,7 +1,8 @@
 /* ==========================================================================
    Mathetes – homepage styles
    Desktop values match the approved 1130px mockup; breakpoints at 960px
-   (tablet: nav collapses, columns stack) and 600px (phone).
+   (tablet: nav collapses, columns stack) and 600px (phone). Above 1920px
+   the page is scaled up and some sections sit side by side (end of file).
    ========================================================================== */
 
 /* Archivo (variable, weights 400–900), self-hosted so no visitor data
@@ -66,6 +67,7 @@
   --page-width: 1130px;
   --gutter: 84px;
   --font: 'Archivo', system-ui, sans-serif;
+  --zoom: 1;                        /* page scale, raised on wide screens */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -233,11 +235,13 @@ a:hover { color: var(--green); }
 
 /* Above 1440px, keep the 1440px framing: the hero grows with the width (same
    1440:841 proportions, capped at 1100px tall) and the photo's top crop scales
-   with the width so heads stay put. At exactly 1440px this matches "center". */
+   with the width so heads stay put. At exactly 1440px this matches "center".
+   Viewport units are scaled by the page zoom too, so they're divided by it
+   to keep the hero the same height on screen. */
 @media (min-width: 1441px) {
   .hero {
-    height: clamp(841px, 58.4vw, 1100px);
-    background-position: center calc(-8.01vw);
+    height: calc(clamp(841px, 58.4vw, 1100px) / var(--zoom));
+    background-position: center calc(-8.01vw / var(--zoom));
   }
 }
 
@@ -870,6 +874,63 @@ html:has(.video-modal[open]) { overflow: hidden; }
 .site-footer a:hover { color: var(--white); opacity: 1; }
 
 .site-footer__links { display: flex; gap: 24px; }
+
+/* ==========================================================================
+   Wide screens (over 1920px): scale the whole page up so it doesn't look
+   lost in the middle, widen it, and put some sections side by side
+   ========================================================================== */
+
+@media (min-width: 1921px) {
+  :root { --zoom: 1.1; --page-width: 1640px; --gutter: 96px; }
+  html { zoom: var(--zoom); }
+
+  /* The popup sizes itself to the viewport, so undo the zoom inside it */
+  .video-modal { zoom: calc(1 / var(--zoom)); }
+
+  /* Testimonials: three across, both videos in the middle column */
+  .testimonials__grid {
+    grid-template-columns: minmax(0, 457px) minmax(0, 340px) minmax(0, 457px);
+    row-gap: 24px;
+  }
+  .testimonials__grid > :nth-child(1) { grid-area: 1 / 1; margin-top: 0; }
+  .testimonials__grid > :nth-child(2) { grid-area: 1 / 3; margin-top: 16px; }
+  .testimonials__grid > :nth-child(3) { grid-area: 1 / 2; margin-top: 44px; }
+  .testimonials__grid > :nth-child(4) { grid-area: 2 / 2; margin-top: 28px; }
+  .testimonials__grid > :nth-child(5) { grid-area: 2 / 1; margin-top: 20px; }
+  .testimonials__grid > :nth-child(6) { grid-area: 2 / 3; margin-top: 36px; }
+  .video-bubble { justify-self: center; margin-left: 0; }
+
+  /* Inhalt & Termine: text | dates | key facts */
+  .schedule .container {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    column-gap: 64px;
+  }
+  .schedule .section-title { grid-column: 1 / -1; }
+  .key-facts,
+  .key-facts--badged {
+    grid-column: 2;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    margin-top: 72px;
+  }
+
+  /* FAQs: two columns */
+  .faq {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 64px;
+    align-items: start;
+    border-top: 0;
+  }
+  .faq__item { border-top: 1px solid rgba(255,255,255,0.18); border-bottom: 0; }
+  .faq__item:nth-last-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,0.18); }
+
+  .team__grid { column-gap: 64px; }
+}
+
+@media (min-width: 2100px) { :root { --zoom: 1.2; } }
+@media (min-width: 2400px) { :root { --zoom: 1.3; } }
 
 /* ==========================================================================
    Narrow desktop: tighten the header so the full nav still fits beside
