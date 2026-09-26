@@ -988,6 +988,10 @@ html:has(.video-modal[open]) { overflow: hidden; }
   .two-col { flex-direction: column; gap: 48px; }
   .two-col > * { flex: none; width: 100%; }
 
+  /* Stacked columns: the illustration sits beside the text that follows it */
+  .intro .two-col > * { display: flow-root; }
+  .intro__illustration { float: right; width: 46%; margin: 4px 0 16px 32px; }
+
   .testimonials__grid {
     grid-template-columns: minmax(0, 457px);
     justify-content: center;
@@ -1002,6 +1006,11 @@ html:has(.video-modal[open]) { overflow: hidden; }
   .key-facts { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 48px; }
   .key-facts--badged { margin-top: 88px; }
   .key-facts__badge { right: -16px; }
+}
+
+/* Too narrow to wrap text beside the illustration: centre it instead */
+@media (max-width: 720px) {
+  .intro__illustration { float: none; width: 100%; max-width: 400px; margin: 0 auto 28px; }
 }
 
 /* ==========================================================================
